@@ -33,7 +33,7 @@ jobs:
         path: "./build"
 
     - name: Copy config file
-    - uses: actions/checkout@master
+      uses: actions/checkout@master
       run: |
         cp "./iisconfig/web.config" "./build/web.config"
 
