@@ -26,15 +26,13 @@ jobs:
       run: |
         npm install 
         npm run build --if-present 
+        cp "./iisconfig/web.config" "./build/web.config"
+
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
       with:
         name: node-app
-        path: "./build"
-
-    - name: Copy config file
-      run: |
-        cp "./iisconfig/web.config" "./build/web.config"
+        path: "./build" 
 
   deploy:
     runs-on: ubuntu-latest
