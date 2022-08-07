@@ -31,6 +31,10 @@ jobs:
       with:
         name: node-app
         path: "./build"
+      uses: canastro/copy-file-action@master
+      with:
+        source: "./iisconfig/web.config"
+        target: "./build/web.config"
 
   deploy:
     runs-on: ubuntu-latest
