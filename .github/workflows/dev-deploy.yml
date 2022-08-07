@@ -25,6 +25,7 @@ jobs:
     - name: npm install, build
       run: |
         npm install
+        npm install fs-extra
         npm run build --if-present
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
