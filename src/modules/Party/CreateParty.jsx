@@ -18,7 +18,7 @@ function CreateParty() {
                                 <label className="block text-sm font-medium mb-1">Party Name <span className="text-red-500">*</span></label>
                                 <input className="form-input w-full " {...register("partyName", { required: true })} />
                             </div>
-                            <div className="text-xs mt-1 text-red-500">{errors.partyName?.type === 'required' && "Party name is required"}</div>
+                            <div className="text-xs mt-1 text-red-500">{errors.partyName?.type === 'required' && "Party Name is required"}</div>
                         </div>
                         <div>
                             <div className="m-6">
