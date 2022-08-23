@@ -1,9 +1,37 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
-
+import axios from 'axios';
+import baseURL from '../../api/axios'
+import useAlert from "../../common/hooks/useAlert";
+import useAuth from '../../hooks/useAuth';
 function CreateParty() {
     const { register, handleSubmit, formState: { errors }, } = useForm();
-    const onSubmit = data => console.log(data);
+    const { showAlert } = useAlert();
+    const { auth } = useAuth()
+        const onSubmit = (data, e) => {
+            let bearer = 'Bearer ' + auth.accessToken;
+            const headers = { 
+                'Accept': 'application/json',
+                'Content-Type': 'application/json-patch+json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': bearer
+            }
+            try {
+                axios.post(`https://lockb0x-api-dev.azurewebsites.net/api/Party`,  {name:data.partyName}, { headers })
+                .then(response => {
+                    if (response.data.status === 'OK') {
+                        console.log(response.data)
+                        showAlert({type:'success', message: 'Party has been created', duration: 2000 });
+                        e.target.reset()
+                    }
+                });
+              
+            } catch (e) {
+                console.log(e)
+            }
+            
+        }
+      
     return (
 
         <div className=" bg-white shadow-lg rounded-sm border border-gray-200">

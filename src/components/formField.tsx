@@ -22,13 +22,13 @@ function FormField({
 }: InputProps) {
   return (
     <>
-      <div className="flex flex-inline justify-between items-center">
+      {/* <div className="flex flex-inline justify-between items-center">
         <label className="block text-sm font-medium  items-center text-gray-700">
           {label}{" "}
           {isMandatory && <span className="text-rose-500 ml-0.5">*</span>}
         </label>
         {rightSlot}
-      </div>
+      </div> */}
 
       <Input
         value={value}
