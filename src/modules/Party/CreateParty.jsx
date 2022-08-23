@@ -7,6 +7,7 @@ import useAuth from '../../hooks/useAuth';
 function CreateParty() {
     const { register, handleSubmit, formState: { errors }, } = useForm();
     const { showAlert } = useAlert();
+    const [dropDownData, SetDropDownData] = React.useState({});
     const { auth } = useAuth()
         const onSubmit = (data, e) => {
             let bearer = 'Bearer ' + auth.accessToken;
@@ -29,8 +30,33 @@ function CreateParty() {
             } catch (e) {
                 console.log(e)
             }
-            
         }
+
+
+
+        // Fetch Party
+        React.useEffect(()=>{
+            let bearer = 'Bearer ' + auth.accessToken;
+            const headers = { 
+                'Accept': 'application/json',
+                'Content-Type': 'application/json-patch+json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': bearer
+            }
+                try {
+                    axios.get(`https://lockb0x-api-dev.azurewebsites.net/api/Party`, { headers })
+                    .then(response =>  {
+                       var resData = response?.data
+                       if (response.data.status === 'OK') {
+                        SetDropDownData(resData.value)
+                        showAlert({ type:"success", message: "Multiple Objects Received", duration: 2000 });
+                        }
+                    });
+                } catch (e) {
+                    showAlert({ type: "error", message: e.message, duration: 2000 });
+                }
+        },[])
+        console.log("object",dropDownData);
       
     return (
 
@@ -57,6 +83,32 @@ function CreateParty() {
                     </div>
                 </form>
             </div>
+                                     
+                                        <div className="part-list-table p-5">
+                                                <table class="table ">
+                                                    <thead>
+                                                        <tr>
+                                                        <th className='text-start'>Party ID</th>
+                                                        <th className='text-start'>Name</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                       {
+                                                            dropDownData && dropDownData.length>0 ? 
+                                                            dropDownData.map((dValue, i) => (
+                                                                <tr key={i}>
+                                                                <td>{dValue.partyId}</td>
+                                                                <td>{dValue.name}</td>
+                                                                </tr>
+                                                            ))
+                                                            :
+                                                            null
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        
+
         </div>
     )
 }

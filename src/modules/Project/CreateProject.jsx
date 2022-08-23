@@ -8,10 +8,65 @@ import useAuth from '../../hooks/useAuth';
 
 function CreateProject() {
     const { register, handleSubmit, formState: { errors }, } = useForm();
-    const onSubmit = data => console.log(data);
+ 
     const [dropDownData, SetDropDownData] = useState({});
+    const [projectData, SetProjectData] = useState({});
     const { showAlert } = useAlert();
     const { auth } = useAuth()
+    // Post Project
+    const onSubmit = (data, e) => {
+        console.log(data);
+        let bearer = 'Bearer ' + auth.accessToken;
+        const headers = { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json-patch+json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': bearer
+        }
+        try {
+            axios.post(`https://lockb0x-api-dev.azurewebsites.net/api/Project`,  
+            {
+                name:data.projectName,
+                partyId:0,
+                contactEmail:data.contactEmail
+            
+            }, { headers })
+            .then(response => {
+             
+                    console.log(response.data)
+                    showAlert({type:'success', message: 'Project has been created', duration: 2000 });
+                    e.target.reset()
+                
+            });
+          
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+
+    // Fetch Project
+    React.useEffect(()=>{
+        let bearer = 'Bearer ' + auth.accessToken;
+        const headers = { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json-patch+json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': bearer
+        }
+            try {
+                axios.get(`https://lockb0x-api-dev.azurewebsites.net/api/Project`, { headers })
+                .then(response =>  {
+                   var resData = response?.data
+                 
+                    SetProjectData(resData.value)
+                    showAlert({ type:"success", message: "Multiple Objects Received", duration: 2000 });
+                   
+                });
+            } catch (e) {
+                showAlert({ type: "error", message: e.message, duration: 2000 });
+            }
+    },[])
     // Fetch Part DropDown
 
     React.useEffect(()=>{
@@ -91,6 +146,29 @@ function CreateProject() {
 
                     </div>
                 </form>
+            </div>
+            <div className="part-list-table p-5">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                        <th className='text-start'>Party Name</th>
+                        <th className='text-start'>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            projectData && projectData.length>0 ? 
+                            projectData.map((dValue, i) => (
+                                <tr key={i}>
+                                <td>{dValue.partyName}</td>
+                                <td>{dValue.contactEmail}</td>
+                                </tr>
+                            ))
+                            :
+                            null
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     )
