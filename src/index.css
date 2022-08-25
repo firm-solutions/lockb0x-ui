@@ -27,6 +27,9 @@ overflow: hidden;
 .custom-row{
   display: flex;
 }
+.table{
+  width: 100%;
+}
 .auth-sec{
   display:flex;
   min-height:100vh;

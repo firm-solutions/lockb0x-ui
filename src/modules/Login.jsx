@@ -94,13 +94,13 @@ const Login = () => {
                         inputType={"password"}
                     />
                       </div>
-                      <div className="col-12">
+                      {/* <div className="col-12">
                         <input type="text" className="form-control" placeholder="Frieghter Wallet Address"/>
-                      </div>
+                      </div> */}
                       <div className="col-12 mt-4 text-center d-flex flex-column">
                       <button type="submit" onClick={login} loading={spinner} disabled={spinner} class="btn mb-3">Login</button> <br/>
     
-                        <a href="javascript:;" className="btn-link d-block text-center mb-4 text-decoration-none text-light">Create Account</a>
+                        <a href="/signup" className="btn-link d-block text-center mb-4 text-decoration-none text-light">Create Account</a>
     
                         <p className="text-center text-muted mb-0">The Firm llc Copyright 2022</p>
                       </div>

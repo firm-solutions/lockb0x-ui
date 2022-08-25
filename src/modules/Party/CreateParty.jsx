@@ -83,30 +83,30 @@ function CreateParty() {
                     </div>
                 </form>
             </div>
-                                     
-                                        <div className="part-list-table p-5">
-                                                <table class="table ">
-                                                    <thead>
-                                                        <tr>
-                                                        <th className='text-start'>Party ID</th>
-                                                        <th className='text-start'>Name</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                       {
-                                                            dropDownData && dropDownData.length>0 ? 
-                                                            dropDownData.map((dValue, i) => (
-                                                                <tr key={i}>
-                                                                <td>{dValue.partyId}</td>
-                                                                <td>{dValue.name}</td>
-                                                                </tr>
-                                                            ))
-                                                            :
-                                                            null
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                
+            <div className="part-list-table p-5">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                            <th className='text-start'>Party ID</th>
+                            <th className='text-start'>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                dropDownData && dropDownData.length>0 ? 
+                                dropDownData.map((dValue, i) => (
+                                    <tr key={i}>
+                                    <td>{dValue.partyId}</td>
+                                    <td>{dValue.name}</td>
+                                    </tr>
+                                ))
+                                :
+                                <h4>Loading....</h4>
+                            }
+                        </tbody>
+                    </table>
+                </div>
                                         
 
         </div>

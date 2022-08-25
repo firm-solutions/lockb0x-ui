@@ -10,41 +10,14 @@ function CreateProject() {
     const { register, handleSubmit, formState: { errors }, } = useForm();
  
     const [dropDownData, SetDropDownData] = useState({});
+    const [dropDownDataID, SetDropDownDataID] = useState({});
     const [projectData, SetProjectData] = useState({});
+    const [dropDownID, SetDropDownID] = useState();
+    const [dropDownShowData, SetdropDownShowData] = useState();
+
     const { showAlert } = useAlert();
     const { auth } = useAuth()
-    // Post Project
-    const onSubmit = (data, e) => {
-        console.log(data);
-        let bearer = 'Bearer ' + auth.accessToken;
-        const headers = { 
-            'Accept': 'application/json',
-            'Content-Type': 'application/json-patch+json',
-            'Access-Control-Allow-Origin': '*',
-            'Authorization': bearer
-        }
-        try {
-            axios.post(`https://lockb0x-api-dev.azurewebsites.net/api/Project`,  
-            {
-                name:data.projectName,
-                partyId:0,
-                contactEmail:data.contactEmail
-            
-            }, { headers })
-            .then(response => {
-             
-                    console.log(response.data)
-                    showAlert({type:'success', message: 'Project has been created', duration: 2000 });
-                    e.target.reset()
-                
-            });
-          
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-
+   
     // Fetch Project
     React.useEffect(()=>{
         let bearer = 'Bearer ' + auth.accessToken;
@@ -68,7 +41,8 @@ function CreateProject() {
             }
     },[])
     // Fetch Part DropDown
-
+   
+      
     React.useEffect(()=>{
         let bearer = 'Bearer ' + auth.accessToken;
         const headers = { 
@@ -83,6 +57,7 @@ function CreateProject() {
                    var resData = response?.data
                    if (response.data.status === 'OK') {
                     SetDropDownData(resData.value)
+                  
                     showAlert({ type:"success", message: "Multiple Objects Received", duration: 2000 });
                     }
                 });
@@ -90,6 +65,48 @@ function CreateProject() {
                 showAlert({ type: "error", message: e.message, duration: 2000 });
             }
     },[])
+
+    
+     // Post Project
+     const onSubmit = (data, e) => {
+        console.log(data);
+        let bearer = 'Bearer ' + auth.accessToken;
+        const headers = { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json-patch+json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': bearer
+        }
+        try {
+            axios.post(`https://lockb0x-api-dev.azurewebsites.net/api/Project`,  
+            {
+                name:data.projectName,
+                partyId:dropDownID,
+                contactEmail:data.contactEmail
+            
+            }, { headers })
+            .then(response => {
+                    SetdropDownShowData(response.data)
+                    console.log(response.data)
+                    showAlert({type:'success', message: 'Project has been created', duration: 2000 });
+                    e.target.reset()
+                
+            });
+          
+        } catch (e) {
+            console.log(e)
+        }
+    }
+   
+
+   const  onChangeHandler = (e) => {
+        const index = e.target.selectedIndex;
+        const el = e.target.childNodes[index]
+        const ID =  el.getAttribute('id'); 
+        SetDropDownID(ID)
+        console.log(" ONjectiDDDDD", dropDownID);
+      }
+
     return (
 
         <div className=" bg-white shadow-lg rounded-sm border border-gray-200">
@@ -108,12 +125,12 @@ function CreateProject() {
                         </div>
                         <div>
                             <label className="block text-sm font-medium mb-1" for="country">Owning Party<span className="text-red-500">*</span></label>
-                            <select className="form-select w-full" {...register("party", { required: true })}>
+                            <select className="form-select w-full" {...register("party", { required: true })} onChange={onChangeHandler}>
                                 <option></option>
                                     {
                                         dropDownData && dropDownData.length>0 ? 
                                         dropDownData.map((dValue, i) => (
-                                            <option key={i}>{dValue.name}</option>
+                                            <option key={i} id={dValue.partyId}>{dValue.name}</option>
                                         ))
                                         :
                                         null
@@ -165,7 +182,7 @@ function CreateProject() {
                                 </tr>
                             ))
                             :
-                            null
+                            <h4>Loading....</h4>
                         }
                     </tbody>
                 </table>
