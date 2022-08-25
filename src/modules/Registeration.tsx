@@ -110,9 +110,11 @@ const Registeration = () => {
       <div className="h-24 mb-10">
         <img src='logotitle.png' alt="Logo" />
       </div>
+      <div className="auth-content-box p-1">
+       
       <form>
         <div className="shadow sm:rounded-md sm:overflow-hidden">
-          <div className="px-4 py-5 bg-white space-y-6 sm:p-6  sign-main-div">
+          <div className=" sign-main-div">
             <div className="grid grid-cols-3 gap-6">
               <div className="col-span-6 sm:col-span-3">
                 <FormField
@@ -167,22 +169,25 @@ const Registeration = () => {
             </div>
 
             <div className="flex justify-center">
-              <Button
+              {/* <Button
                 key="sign-up"
                 label={"Sign Up"}
                 loading={spinner}
                 onPress={captchaVerify}
                 size="lg"
                 disabled={spinner}
-              />
+              /> */}
+              <button type="submit" onClick={captchaVerify}  className="btn my-5 w-full">Sign Up</button>
             </div>
           </div>
-          <div className="px-4 py-3 bg-gray-200 flex flex-col justify-center items-center ">
+          <div className="px-4 py-3 text-white flex flex-col justify-center items-center ">
             <p>Already Account ? <Link style={{ textDecoration: 'underline' }} to='/login'>Please Login</Link></p>
             <p>The Firm LLC Copyright 2022</p>
           </div>
         </div>
       </form>
+       
+      </div>
     </div>
   );
 };

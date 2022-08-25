@@ -69,50 +69,49 @@ const Login = () => {
 
 
     return (
-        <div className="items-center w-96 mx-auto justify-center mt-20">
-            <div className="h-24 mb-10">
+        <section className="auth-sec">
+        <div className="container">
+          <div className="row custom-row">
+                
+            <div className="col-lg-4 col-md-8 mx-auto text-center">
                 <img src='logotitle.png' alt="Logo" />
+              <div className="auth-content-box">
+                  <h5 className="mb-4">Login</h5>
+                  <form action="" className="mt-2">
+                    <div className="row">
+                      <div className="col-12">
+                      <FormField
+                        value={state.email}
+                        onChangeText={(email) => setState({ ...state, email })}
+                        inputType={"email"}
+                        placeholder={"JaneDoe@protonmail.com"}
+                    />
+                      </div>
+                      <div className="col-12">
+                      <FormField
+                        value={state.password}
+                        onChangeText={(password) => setState({ ...state, password })}
+                        inputType={"password"}
+                    />
+                      </div>
+                      {/* <div className="col-12">
+                        <input type="text" className="form-control" placeholder="Frieghter Wallet Address"/>
+                      </div> */}
+                      <div className="col-12 mt-4 text-center d-flex flex-column">
+                      <button type="submit" onClick={login} loading={spinner} disabled={spinner} class="btn mb-3">Login</button> <br/>
+    
+                        <a href="/signup" className="btn-link d-block text-center mb-4 text-decoration-none text-light">Create Account</a>
+    
+                        <p className="text-center text-muted mb-0">The Firm llc Copyright 2022</p>
+                      </div>
+                    </div>
+                  </form>
+              </div>
             </div>
-            <form >
-                <div className="shadow sm:rounded-md sm:overflow-hidden">
-                    <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
-                        <div className="grid grid-cols-3 gap-6">
-                            <div className="col-span-6 sm:col-span-3">
-                                <FormField
-                                    isMandatory
-                                    label={"Email Address"}
-                                    value={state.email}
-                                    onChangeText={(email) => setState({ ...state, email })}
-                                    inputType={"email"}
-                                />
-                            </div>
-                            <div className="col-span-6 sm:col-span-3">
-                                <FormField
-                                    isMandatory
-                                    label={"Password"}
-                                    value={state.password}
-                                    onChangeText={(password) => setState({ ...state, password })}
-                                    inputType={"password"}
-                                />
-                            </div>
-                        </div>
-                        <div className="flex justify-center ">
-                            <Button
-                                label={"Login"}
-                                loading={spinner}
-                                onPress={login}
-                                size="lg"
-                                disabled={spinner}
-                            />
-                        </div>
-                    </div>
-                    <div className="px-4 py-3 bg-gray-200 flex flex-col justify-center items-center sm:px-6">
-                        <Link style={{ textDecoration: 'underline' }} to='/signup'>Create Account</Link>
-                        <p>The Firm LLC Copyright 2022</p>
-                    </div>
-                </div>
-            </form>
+            
+          </div>
         </div>
+      </section>
     );
 };
 

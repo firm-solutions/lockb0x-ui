@@ -1,9 +1,112 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
+import axios from 'axios';
+import baseURL from '../../api/axios'
+import useAlert from "../../common/hooks/useAlert";
+import AuthContext from '../../context/AuthProvider';
+import useAuth from '../../hooks/useAuth';
 
 function CreateProject() {
     const { register, handleSubmit, formState: { errors }, } = useForm();
-    const onSubmit = data => console.log(data);
+ 
+    const [dropDownData, SetDropDownData] = useState({});
+    const [dropDownDataID, SetDropDownDataID] = useState({});
+    const [projectData, SetProjectData] = useState({});
+    const [dropDownID, SetDropDownID] = useState();
+    const [dropDownShowData, SetdropDownShowData] = useState();
+
+    const { showAlert } = useAlert();
+    const { auth } = useAuth()
+   
+    // Fetch Project
+    React.useEffect(()=>{
+        let bearer = 'Bearer ' + auth.accessToken;
+        const headers = { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json-patch+json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': bearer
+        }
+            try {
+                axios.get(`https://lockb0x-api-dev.azurewebsites.net/api/Project`, { headers })
+                .then(response =>  {
+                   var resData = response?.data
+                 
+                    SetProjectData(resData.value)
+                    showAlert({ type:"success", message: "Multiple Objects Received", duration: 2000 });
+                   
+                });
+            } catch (e) {
+                showAlert({ type: "error", message: e.message, duration: 2000 });
+            }
+    },[])
+    // Fetch Part DropDown
+   
+      
+    React.useEffect(()=>{
+        let bearer = 'Bearer ' + auth.accessToken;
+        const headers = { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json-patch+json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': bearer
+        }
+            try {
+                axios.get(`https://lockb0x-api-dev.azurewebsites.net/api/Party`, { headers })
+                .then(response =>  {
+                   var resData = response?.data
+                   if (response.data.status === 'OK') {
+                    SetDropDownData(resData.value)
+                  
+                    showAlert({ type:"success", message: "Multiple Objects Received", duration: 2000 });
+                    }
+                });
+            } catch (e) {
+                showAlert({ type: "error", message: e.message, duration: 2000 });
+            }
+    },[])
+
+    
+     // Post Project
+     const onSubmit = (data, e) => {
+        console.log(data);
+        let bearer = 'Bearer ' + auth.accessToken;
+        const headers = { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json-patch+json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': bearer
+        }
+        try {
+            axios.post(`https://lockb0x-api-dev.azurewebsites.net/api/Project`,  
+            {
+                name:data.projectName,
+                partyId:dropDownID,
+                contactEmail:data.contactEmail
+            
+            }, { headers })
+            .then(response => {
+                    SetdropDownShowData(response.data)
+                    console.log(response.data)
+                    showAlert({type:'success', message: 'Project has been created', duration: 2000 });
+                    e.target.reset()
+                
+            });
+          
+        } catch (e) {
+            console.log(e)
+        }
+    }
+   
+
+   const  onChangeHandler = (e) => {
+        const index = e.target.selectedIndex;
+        const el = e.target.childNodes[index]
+        const ID =  el.getAttribute('id'); 
+        SetDropDownID(ID)
+        console.log(" ONjectiDDDDD", dropDownID);
+      }
+
     return (
 
         <div className=" bg-white shadow-lg rounded-sm border border-gray-200">
@@ -22,11 +125,18 @@ function CreateProject() {
                         </div>
                         <div>
                             <label className="block text-sm font-medium mb-1" for="country">Owning Party<span className="text-red-500">*</span></label>
-                            <select className="form-select w-full" {...register("party", { required: true })}>
+                            <select className="form-select w-full" {...register("party", { required: true })} onChange={onChangeHandler}>
                                 <option></option>
-                                <option>Party One</option>
-                                <option>Party Two</option>
-                                <option>Party Three</option>
+                                    {
+                                        dropDownData && dropDownData.length>0 ? 
+                                        dropDownData.map((dValue, i) => (
+                                            <option key={i} id={dValue.partyId}>{dValue.name}</option>
+                                        ))
+                                        :
+                                        null
+                                    }
+                                
+                               
                             </select>
                             <div className="text-xs mt-1 text-red-500">{errors.party?.type === 'required' && "Owning Party is required"}</div>
                         </div>
@@ -53,6 +163,29 @@ function CreateProject() {
 
                     </div>
                 </form>
+            </div>
+            <div className="part-list-table p-5">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                        <th className='text-start'>Party Name</th>
+                        <th className='text-start'>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            projectData && projectData.length>0 ? 
+                            projectData.map((dValue, i) => (
+                                <tr key={i}>
+                                <td>{dValue.partyName}</td>
+                                <td>{dValue.contactEmail}</td>
+                                </tr>
+                            ))
+                            :
+                            <h4>Loading....</h4>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     )
