@@ -60,7 +60,7 @@ border-radius: 20px;
 .custom-wallet-btn{
   float: right;
   height: 40px;
-  width: 160px;
+  /* width: 160px; */
   padding:10px;
   border: 1px solid #000;
   display: flex;
@@ -70,6 +70,7 @@ border-radius: 20px;
   border-radius: 8px;
   margin-bottom: 0px;
   color: #fff;
+  cursor: pointer;
   }
 .auth-sec{
   display:flex;
