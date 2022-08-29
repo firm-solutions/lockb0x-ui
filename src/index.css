@@ -51,6 +51,12 @@ border-radius: 20px;
   right: 10px;
   top: 10px;
 }
+.custom-dashboard-box{
+  width: 100%;
+  height: 136px;
+  background: rgba(217, 217, 217, 0.2);
+  border-radius: 10px;
+}
 .custom-wallet-btn{
   float: right;
   height: 40px;

@@ -60,11 +60,11 @@ function DashboardCard03() {
   };
 
   return (
-    <div className="flex flex-col col-span-full sm:col-span-2 xl:col-span-4 bg-white shadow-lg rounded-sm border border-slate-200">
+    <div className="flex flex-col col-span-full sm:col-span-2 xl:col-span-4 shadow-lg rounded-sm custom-dashboard-box">
       <div className="px-5 pt-6 py-4 text-center">
-        <h2 className="text-lg font-semibold text-slate-800 mb-2">Total Received</h2>
+        <h2 className="text-lg font-semibold text-white mb-2">Total Received</h2>
         <div className="text-xs font-semibold text-slate-400 uppercase mb-1">Total</div>
-        <div className="text-3xl font-bold text-slate-800 mr-2">$9,962</div>
+        <div className="text-3xl font-bold text-white mr-2">$9,962</div>
       </div>
     </div>
   );
