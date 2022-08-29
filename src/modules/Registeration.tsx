@@ -116,7 +116,8 @@ const Registeration = () => {
         <div className="shadow sm:rounded-md sm:overflow-hidden">
           <div className=" sign-main-div">
             <div className="grid grid-cols-3 gap-6">
-              <div className="col-span-6 sm:col-span-3">
+              <div className="col-span-6 sm:col-span-3 ">
+                <label className="text-white">Email Address</label>
                 <FormField
                   isMandatory
                   label={"Email Address"}
@@ -126,15 +127,18 @@ const Registeration = () => {
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
+              <label className="text-white">Password</label>
                 <FormField
                   isMandatory
                   label={"Password"}
                   value={state.password}
                   onChangeText={(password) => setState({ ...state, password })}
                   inputType={"password"}
+                  
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
+              <label className="text-white">Confirm Password</label>
                 <FormField
                   isMandatory
                   label={"Confirm Password"}
@@ -145,7 +149,11 @@ const Registeration = () => {
                   inputType={"password"}
                 />
               </div>
+             
               <div className="col-span-6 sm:col-span-3">
+              <button className="custom-wallet-btn">
+                Wallet Address
+              </button>
                 <FormField
                   isMandatory
                   label="Wallet Address [?]"

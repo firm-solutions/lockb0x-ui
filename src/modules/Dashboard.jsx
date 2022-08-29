@@ -18,60 +18,60 @@ function Dashboard() {
         {/* Line chart (Acme Professional) */}
         <DashboardCard03 />
       </div>
-
-
-
-      
-<div class="overflow-x-auto relative mt-20">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 custom-table-dashboard">
-        <thead class="text-xs text-gray-900 uppercase dark:text-gray-400">
-            <tr>
-                <th scope="col" class="py-3 px-6">
+<table class="table-auto w-full  rounded border-separate border-spacing-y-4 custom-table-dashboard mt-20">
+        <thead class="text-white text-left   tracking-wider">
+        <tr>
+                <th scope="col" class="py-3 px-4">
                     Project Name
                 </th>
-                <th scope="col" class="py-3 px-6">
+                <th scope="col" class="py-3 px-4">
                     Counter Party
                 </th>
-                <th scope="col" class="py-3 px-6">
+                <th scope="col" class="py-3 px-4">
                     Date Submitted
                 </th>
-                <th scope="col" class="py-3 px-6">
+                <th scope="col" class="py-3 px-4">
                     Amount
                 </th>
-                <th scope="col" class="py-3 px-6">
+                <th scope="col" class="py-3 px-4">
                     Status
                 </th>
-                <th scope="col" class="py-3 px-6">
+                <th scope="col" class="py-3 px-4">
                     Details
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr class="bg-white dark:bg-gray-800">
-                <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    NFT Creation
-                </th>
-                <td class="py-4 px-6">
-                    BAYC
-                </td>
-                <td class="py-4 px-6">
-                    06/22/2022
-                </td>
-                <td class="py-4 px-6">
-                    $2999
-                </td>
-                <td class="py-4 px-6">
-                    Pending
-                </td>
-                <td class="py-4 px-6">
-                    <BsArrowRightCircle size={35}/>
-                </td>
-            </tr>
-            
-        </tbody>
-    </table>
-</div>
+              <tr class="bg-stone-800 mt-6 text-white rounded">
+                <td class="p-4">NFT Creation</td>
+                <td class="p-4">BAYC</td>
+                <td class="p-4">06/22/2022</td>
+                <td class="p-4">$2999</td>
+                <td class="p-4">Pending</td>
+                <td class="p-4"><BsArrowRightCircle size={35}/></td>
+              </tr>
 
+
+              <tr class="bg-stone-800 mt-6 text-white rounded">
+                <td class="p-4">NFT Creation</td>
+                <td class="p-4">BAYC</td>
+                <td class="p-4">06/22/2022</td>
+                <td class="p-4">$2999</td>
+                <td class="p-4">Pending</td>
+                <td class="p-4"><BsArrowRightCircle size={35}/></td>
+              </tr>
+
+
+              <tr class="bg-stone-800 mt-6 text-white rounded">
+                <td class="p-4">NFT Creation</td>
+                <td class="p-4">BAYC</td>
+                <td class="p-4">06/22/2022</td>
+                <td class="p-4">$2999</td>
+                <td class="p-4">Pending</td>
+                <td class="p-4"><BsArrowRightCircle size={35}/></td>
+              </tr>
+        </tbody>
+      </table>
 
     </div>
   );

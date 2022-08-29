@@ -11,7 +11,7 @@ function CreateProject() {
     const override: CSSProperties = {
         display: "block",
         margin: "0 auto",
-        borderColor: "green",
+        borderColor: "white",
       };
 
 
@@ -128,18 +128,20 @@ function CreateProject() {
                 <h2 className="text-2xl text-white font-bold mb-6">Create Project</h2>
             </header>
             <div className="p-10">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="grid gap-5 md:grid-cols-3">
-                        <div>
-                            <div>
-                                <label className="block text-sm text-white font-medium mb-1">Project Name<span className="text-red-500">*</span></label>
-                                <input className="form-input w-full " {...register("projectName", { required: true })} />
+                <div className="container mt-20">
+                <div className="row custom-row">
+                        
+                    <div className="col-lg-4 col-md-8 mx-auto text-center">
+                        
+                    <div className="auth-content-box custom-h-w">
+                        <form action="" className="mt-2 w-full" onSubmit={handleSubmit(onSubmit)}>
+                            <div className="row">
+                            <div className="col-12">
+                                <input className="form-control w-full " {...register("projectName", { required: true })} placeholder="Project Name" />
+                                <div className="text-xs mt-1 text-red-500">{errors.projectName?.type === 'required' && "Project name is required"}</div>
                             </div>
-                            <div className="text-xs mt-1 text-red-500">{errors.projectName?.type === 'required' && "Project name is required"}</div>
-                        </div>
-                        <div>
-                            <label className="block text-sm text-white font-medium mb-1" for="country">Owning Party<span className="text-red-500">*</span></label>
-                            <select className="form-select w-full" {...register("party", { required: true })} onChange={onChangeHandler}>
+                            <div className="col-12">
+                            <select className="form-control w-full" {...register("party", { required: true })} onChange={onChangeHandler}>
                                 <option></option>
                                     {
                                         dropDownData && dropDownData.length>0 ? 
@@ -149,63 +151,60 @@ function CreateProject() {
                                         :
                                         null
                                     }
-                                
-                               
                             </select>
                             <div className="text-xs mt-1 text-red-500">{errors.party?.type === 'required' && "Owning Party is required"}</div>
-                        </div>
-                        <div>
-                            <div>
-                                <label className="block text-sm text-white font-medium mb-1">Contact Email<span className="text-red-500">*</span></label>
-                                <input className="form-input w-full " {...register("contactEmail", { required: true })} />
                             </div>
-                            <div className="text-xs mt-1 text-red-500">{errors.contactEmail?.type === 'required' && "Contact email is required"}</div>
-                        </div>
-                        <div>
-                            <div>
-                                <label className="block text-sm text-white font-medium mb-1">Upload Files <span className="text-red-500">*</span></label>
-                                <input className="form-input w-full " type="file" name="file" />
-                                {/* <input  {...register("uploadFile", { required: true })} /> */}
+                            <div className="col-12">
+                                <input className="form-control w-full " placeholder='Your Email' {...register("contactEmail", { required: true })} />
+                                <div className="text-xs mt-1 text-red-500">{errors.contactEmail?.type === 'required' && "Contact email is required"}</div>
                             </div>
-                            <div className="text-xs mt-1 text-red-500">{errors.uploadFile?.type === 'required' && "Upload File is required"}</div>
-                            
-                        </div>
-                        <div>
-                            <div className="m-6">
-                                <button type='submit' className="btn  rounded-lg px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white">Create Project</button>
+                            <div className="col-12">
+                                <input className="form-control w-full " type="text" name="file" placeholder='Upload Files here' />
+                                <div className="text-xs mt-1 text-red-500">{errors.uploadFile?.type === 'required' && "Upload File is required"}</div>
                             </div>
-                        </div>
-
+                            <div className="col-12 mt-4 text-center d-flex flex-column mt-20">
+                            <button type="submit" class="btn mb-3 ">Create Project</button> <br/>
+                            </div>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                    </div>
+                    
+                </div>
             </div>
-            <div class="overflow-x-auto relative mt-20">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 custom-table-dashboard">
-                    <thead class="text-xs text-gray-900 uppercase dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="py-3 px-6">
-                                Party Name
-                            </th>
-                            <th scope="col" class="py-3 px-6">
-                                Name
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
+
+
+
+
+
+            </div>
+            <table class="table-auto w-full  rounded border-separate border-spacing-y-4 custom-table-dashboard mt-20">
+                <thead class="text-white text-left   tracking-wider">
+                    <tr>
+                        <th scope="col" class="py-3 px-4 text-center">
+                            Party Name
+                        </th>
+                        <th scope="col" class="py-3 px-4 text-center">
+                            Name
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
                     {
                         projectData && projectData.length>0 ? 
                         projectData.map((dValue, i) => (
-                            <tr key={i}>
-                            <td scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">{dValue.partyName}</td>
-                            <td>{dValue.contactEmail}</td>
+                            <tr  key={i} class="bg-stone-800 mt-6 text-white rounded">
+                                <td class="p-4 text-center">{dValue.partyName}</td>
+                                <td class="p-4 text-center">{dValue.contactEmail}</td>
                             </tr>
                         ))
                         :
-                        <ClipLoader color={color} loading={loading} cssOverride={override} size={50} />
+                        <div className="w-full h-full d-flex align-items-center justify-content-center">
+                            <ClipLoader color={color} loading={loading} cssOverride={override} size={50} />
+                        </div> 
                     }
-                    </tbody>
-                </table>
-            </div>
+                </tbody>
+            </table>  
         </div>
     )
 }

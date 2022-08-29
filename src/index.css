@@ -26,12 +26,37 @@ border-radius: 20px;
 .custom-sidebar{
   min-height: 100vh;
 }
+.custom-h-w{
+  background: rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0px 8px 42px rgba(116, 210, 195, 0.29) !important;
+  border-radius: 10px !important;
+  min-width: 561px;
+  min-height: 533px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 .custom-row{
   display: flex;
 }
 .table{
   width: 100%;
 }
+.custom-wallet-btn{
+  float: right;
+  height: 40px;
+  width: 160px;
+  padding:10px;
+  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #60706c;
+  border-radius: 8px;
+  margin-bottom: 0px;
+  color: #fff;
+  }
 .auth-sec{
   display:flex;
   min-height:100vh;

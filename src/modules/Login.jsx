@@ -80,6 +80,7 @@ const Login = () => {
                   <form action="" className="mt-2">
                     <div className="row">
                       <div className="col-12">
+                        <label style={{float:'left'}}>Email</label>
                       <FormField
                         value={state.email}
                         onChangeText={(email) => setState({ ...state, email })}
@@ -88,6 +89,7 @@ const Login = () => {
                     />
                       </div>
                       <div className="col-12">
+                        <label style={{float:'left'}}>Password</label>
                       <FormField
                         value={state.password}
                         onChangeText={(password) => setState({ ...state, password })}
