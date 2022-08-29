@@ -1,13 +1,26 @@
-import React from 'react'
+import React,  { useState, CSSProperties } from 'react'
 import { useForm } from "react-hook-form";
 import axios from 'axios';
 import baseURL from '../../api/axios'
 import useAlert from "../../common/hooks/useAlert";
 import useAuth from '../../hooks/useAuth';
+import ClipLoader from "react-spinners/ClipLoader";
+
+
+
 function CreateParty() {
+    const override: CSSProperties = {
+        display: "block",
+        margin: "0 auto",
+        borderColor: "green",
+      };
     const { register, handleSubmit, formState: { errors }, } = useForm();
+    let [loading, setLoading] = useState(true);
+    const [modalShow, setModalShow] = React.useState(false);
+    let [color, setColor] = useState("#ffffff");
     const { showAlert } = useAlert();
     const [dropDownData, SetDropDownData] = React.useState({});
+    const [dropDownShowDataParty, SetdropDownShowDataParty] = useState({});
     const { auth } = useAuth()
         const onSubmit = (data, e) => {
             let bearer = 'Bearer ' + auth.accessToken;
@@ -21,6 +34,7 @@ function CreateParty() {
                 axios.post(`https://lockb0x-api-dev.azurewebsites.net/api/Party`,  {name:data.partyName}, { headers })
                 .then(response => {
                     if (response.data.status === 'OK') {
+                        SetdropDownShowDataParty(response.data)
                         console.log(response.data)
                         showAlert({type:'success', message: 'Party has been created', duration: 2000 });
                         e.target.reset()
@@ -48,28 +62,32 @@ function CreateParty() {
                     .then(response =>  {
                        var resData = response?.data
                        if (response.data.status === 'OK') {
+                        setLoading(loading)
                         SetDropDownData(resData.value)
                         showAlert({ type:"success", message: "Multiple Objects Received", duration: 2000 });
+                        }
+                        else{
+                            setLoading(!loading)
                         }
                     });
                 } catch (e) {
                     showAlert({ type: "error", message: e.message, duration: 2000 });
                 }
-        },[])
+        },[dropDownShowDataParty])
         console.log("object",dropDownData);
       
     return (
-
-        <div className=" bg-white shadow-lg rounded-sm border border-gray-200">
+        
+        <div className=" shadow-lg">
             <header className="px-5 py-4 border-b border-gray-100">
-                <h2 className="text-2xl text-gray-800 font-bold mb-6">Create Party</h2>
+                <h2 className="text-2xl text-white font-bold mb-6">Create Party</h2>
             </header>
             <div className="p-10">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid gap-5 md:grid-cols-3">
                         <div>
                             <div>
-                                <label className="block text-sm font-medium mb-1">Party Name <span className="text-red-500">*</span></label>
+                                <label className="block text-sm text-white font-medium mb-1">Party Name <span className="text-red-500">*</span></label>
                                 <input className="form-input w-full " {...register("partyName", { required: true })} />
                             </div>
                             <div className="text-xs mt-1 text-red-500">{errors.partyName?.type === 'required' && "Party Name is required"}</div>
@@ -83,30 +101,35 @@ function CreateParty() {
                     </div>
                 </form>
             </div>
-                                
-            <div className="part-list-table p-5">
-                    <table class="table ">
-                        <thead>
-                            <tr>
-                            <th className='text-start'>Party ID</th>
-                            <th className='text-start'>Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                dropDownData && dropDownData.length>0 ? 
-                                dropDownData.map((dValue, i) => (
-                                    <tr key={i}>
-                                    <td>{dValue.partyId}</td>
-                                    <td>{dValue.name}</td>
-                                    </tr>
-                                ))
-                                :
-                                <h4>Loading....</h4>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+            <div class="overflow-x-auto relative mt-20">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 custom-table-dashboard">
+        <thead class="text-xs text-gray-900 uppercase dark:text-gray-400">
+            <tr>
+                <th scope="col" class="py-3 px-6">
+                     Party ID
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Name
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+           
+                {
+                dropDownData && dropDownData.length>0 ? 
+                dropDownData.map((dValue, i) => (
+                    <tr key={i} className="mb-5">
+                    <td scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">{dValue.partyId}</td>
+                    <td>{dValue.name}</td>
+                    </tr>
+                ))
+                :
+                <ClipLoader color={color} loading={loading} cssOverride={override} size={50} />
+            }
+        </tbody>
+    </table>
+</div>
+            
                                         
 
         </div>

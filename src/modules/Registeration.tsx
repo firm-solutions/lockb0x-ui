@@ -156,7 +156,8 @@ const Registeration = () => {
                       label={"Generate New Address"}
                       loading={walletSpinner}
                       onPress={generateAddress}
-                      size="sm"
+                      size="lg"
+                      className="wallet-btn btn-primary"
                     />
                   }
                   onChangeText={(walletAddress) =>
