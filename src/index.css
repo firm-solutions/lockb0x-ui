@@ -43,6 +43,14 @@ border-radius: 20px;
 .table{
   width: 100%;
 }
+.custom-select-pos{
+  position: relative;
+}
+.select-icon{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
 .custom-wallet-btn{
   float: right;
   height: 40px;

@@ -6,8 +6,9 @@ import useAlert from "../../common/hooks/useAlert";
 import AuthContext from '../../context/AuthProvider';
 import useAuth from '../../hooks/useAuth';
 import ClipLoader from "react-spinners/ClipLoader";
+import { FaCaretDown } from "react-icons/fa";
 function CreateProject() {
-
+    
     const override: CSSProperties = {
         display: "block",
         margin: "0 auto",
@@ -140,8 +141,8 @@ function CreateProject() {
                                 <input className="form-control w-full " {...register("projectName", { required: true })} placeholder="Project Name" />
                                 <div className="text-xs mt-1 text-red-500">{errors.projectName?.type === 'required' && "Project name is required"}</div>
                             </div>
-                            <div className="col-12">
-                            <select className="form-control w-full" {...register("party", { required: true })} onChange={onChangeHandler}>
+                            <div className="col-12 custom-select-pos">
+                            <select className="form-control w-full " {...register("party", { required: true })} onChange={onChangeHandler}>
                                 <option></option>
                                     {
                                         dropDownData && dropDownData.length>0 ? 
@@ -152,6 +153,9 @@ function CreateProject() {
                                         null
                                     }
                             </select>
+                            <div className="select-icon">
+                                <FaCaretDown color='#fff' size={30}/>
+                            </div>
                             <div className="text-xs mt-1 text-red-500">{errors.party?.type === 'required' && "Owning Party is required"}</div>
                             </div>
                             <div className="col-12">

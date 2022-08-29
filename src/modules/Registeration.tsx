@@ -151,8 +151,8 @@ const Registeration = () => {
               </div>
              
               <div className="col-span-6 sm:col-span-3">
-              <button className="custom-wallet-btn">
-                Wallet Address
+              <button className="custom-wallet-btn" disabled>
+                Get Wallet Address
               </button>
                 <FormField
                   isMandatory

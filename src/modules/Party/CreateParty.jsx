@@ -90,19 +90,16 @@ function CreateParty() {
                     <div className="auth-content-box custom-h-w">
                         <form action="" className="mt-2 w-full" onSubmit={handleSubmit(onSubmit)}>
                             <div className="row">
-                            <div className="col-12">
-                            <input type="text" name="" id=""  className='form-control' placeholder='Party Name' {...register("partyName", { required: true })}/>
-                            <div className="text-xs mt-1 text-red-500">{errors.partyName?.type === 'required' && "Party Name is required"}</div>
-                            </div>
-                            <div className="col-12">
-                            <input type="text" name="" id="" className='form-control'  placeholder='Select Api Key'/>
-                            </div>
-                            {/* <div className="col-12">
-                                <input type="text" className="form-control" placeholder="Frieghter Wallet Address"/>
-                            </div> */}
-                            <div className="col-12 mt-4 text-center d-flex flex-column mt-20">
-                            <button type="submit" class="btn mb-3 ">Create Party</button> <br/>
-                            </div>
+                                <div className="col-12">
+                                    <input type="text" name="" id=""  className='form-control' placeholder='Party Name' {...register("partyName", { required: true })}/>
+                                    <div className="text-xs mt-1 text-red-500">{errors.partyName?.type === 'required' && "Party Name is required"}</div>
+                                </div>
+                                {/* <div className="col-12">
+                                    <input type="text" className="form-control" placeholder="Frieghter Wallet Address"/>
+                                </div> */}
+                                <div className="col-12 mt-4 text-center d-flex flex-column mt-20">
+                                    <button type="submit" class="btn mb-3 ">Create Party</button> <br/>
+                                </div>
                             </div>
                         </form>
                     </div>
