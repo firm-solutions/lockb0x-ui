@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import axios from "axios";
 import useAlert from "../common/hooks/useAlert";
 import useFreighterAPI from "../common/hooks/useFreighterAPI";
@@ -6,6 +6,8 @@ import Button from "../components/button";
 import FormField from "../components/formField";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
+
 
 const checkFormValidation = (form: any): string => {
   const { email, password, confirmPassword, walletAddress } = form;
@@ -18,8 +20,14 @@ const checkFormValidation = (form: any): string => {
 };
 
 const Registeration = () => {
+  const override = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "green",
+  };
   let navigate = useNavigate();
   const [spinner , setSpinner] = React.useState(false);
+  let [color, setColor] = useState("#ffffff");
   const [walletSpinner, setWalletSpinner] = React.useState(false);
   const [state, setState] = React.useState({
     email: "",
@@ -35,7 +43,6 @@ const Registeration = () => {
 
   // Send Object to API
   const submitForm = (payload: any) => {
-
     // posting data to api provided in swagger
     setSpinner(true);
     fetch('https://lockb0x-api-dev.azurewebsites.net/api/User/Register', {
@@ -72,11 +79,14 @@ const Registeration = () => {
           // Step: 1 Need to send the token to your server and then verify it.
           // Step: 2 If the token is valid, you can send the user to the next page.
           // Step: 3 If the token is invalid, you can show an error message to the user.
-
-          submitForm({ 'reCaptchaToken': token, ...state });
+          submitForm({ 'reCaptchaToken': token, ...state, });
         });
     });
   };
+
+  const preventation = (e: React.FormEvent<HTMLFormElement>)=>{
+    e.preventDefault();
+  }
 
   const generateAddress = async () => {
     try {
@@ -111,90 +121,95 @@ const Registeration = () => {
         <img src='logotitle.png' alt="Logo" />
       </div>
       <div className="auth-content-box p-1">
-       
-      <form>
-        <div className="shadow sm:rounded-md sm:overflow-hidden">
-          <div className=" sign-main-div">
-            <div className="grid grid-cols-3 gap-6">
-              <div className="col-span-6 sm:col-span-3 ">
-                <label className="text-white">Email Address</label>
-                <FormField
-                  isMandatory
-                  label={"Email Address"}
-                  value={state.email}
-                  onChangeText={(email) => setState({ ...state, email })}
-                  inputType={"email"}
-                />
-              </div>
-              <div className="col-span-6 sm:col-span-3">
-              <label className="text-white">Password</label>
-                <FormField
-                  isMandatory
-                  label={"Password"}
-                  value={state.password}
-                  onChangeText={(password) => setState({ ...state, password })}
-                  inputType={"password"}
+      {
+                  spinner == true ?
                   
-                />
-              </div>
-              <div className="col-span-6 sm:col-span-3">
-              <label className="text-white">Confirm Password</label>
-                <FormField
-                  isMandatory
-                  label={"Confirm Password"}
-                  value={state.confirmPassword}
-                  onChangeText={(confirmPassword) =>
-                    setState({ ...state, confirmPassword })
-                  }
-                  inputType={"password"}
-                />
-              </div>
-             
-              <div className="col-span-6 sm:col-span-3">
-              <button className="custom-wallet-btn" disabled>
-                Get Wallet Address
-              </button>
-                <FormField
-                  isMandatory
-                  label="Wallet Address [?]"
-                  value={state.walletAddress}
-                  rightSlot={
-                    <Button
-                      key="generate-address"
-                      label={"Generate New Address"}
-                      loading={walletSpinner}
-                      onPress={generateAddress}
-                      size="lg"
-                      className="wallet-btn btn-primary"
-                    />
-                  }
-                  onChangeText={(walletAddress) =>
-                    setState({ ...state, walletAddress })
-                  }
-                  inputType={"text"}
-                  inputStyles={{ textOverflow: "ellipsis" }}
-                />
-              </div>
-            </div>
+                  <ClipLoader color={color} loading={spinner} cssOverride={override} size={50} />
+                  :
+                  <form onSubmit={preventation}>
+                    <div className="shadow sm:rounded-md sm:overflow-hidden">
+                      <div className=" sign-main-div">
+                        <div className="grid grid-cols-3 gap-6">
+                          <div className="col-span-6 sm:col-span-3 ">
+                            <label className="text-white">Email Address</label>
+                            <FormField
+                              isMandatory
+                              label={"Email Address"}
+                              value={state.email}
+                              onChangeText={(email) => setState({ ...state, email })}
+                              inputType={"email"}
+                            />
+                          </div>
+                          <div className="col-span-6 sm:col-span-3">
+                          <label className="text-white">Password</label>
+                            <FormField
+                              isMandatory
+                              label={"Password"}
+                              value={state.password}
+                              onChangeText={(password) => setState({ ...state, password })}
+                              inputType={"password"}
+                              
+                            />
+                          </div>
+                          <div className="col-span-6 sm:col-span-3">
+                          <label className="text-white">Confirm Password</label>
+                            <FormField
+                              isMandatory
+                              label={"Confirm Password"}
+                              value={state.confirmPassword}
+                              onChangeText={(confirmPassword) =>
+                                setState({ ...state, confirmPassword })
+                              }
+                              inputType={"password"}
+                            />
+                          </div>
+                        
+                          <div className="col-span-6 sm:col-span-3">
+                          <button className="custom-wallet-btn" disabled>
+                            Get Wallet Address
+                          </button>
+                            <FormField
+                              isMandatory
+                              label="Wallet Address [?]"
+                              value={state.walletAddress}
+                              rightSlot={
+                                <Button
+                                  key="generate-address"
+                                  label={"Generate New Address"}
+                                  loading={walletSpinner}
+                                  onPress={generateAddress}
+                                  size="lg"
+                                  className="wallet-btn btn-primary"
+                                />
+                              }
+                              onChangeText={(walletAddress) =>
+                                setState({ ...state, walletAddress })
+                              }
+                              inputType={"text"}
+                              inputStyles={{ textOverflow: "ellipsis" }}
+                            />
+                          </div>
+                        </div>
 
-            <div className="flex justify-center">
-              {/* <Button
-                key="sign-up"
-                label={"Sign Up"}
-                loading={spinner}
-                onPress={captchaVerify}
-                size="lg"
-                disabled={spinner}
-              /> */}
-              <button type="submit" onClick={captchaVerify}  className="btn my-5 w-full">Sign Up</button>
-            </div>
-          </div>
-          <div className="px-4 py-3 text-white flex flex-col justify-center items-center ">
-            <p>Already Account ? <Link style={{ textDecoration: 'underline' }} to='/login'>Please Login</Link></p>
-            <p>The Firm LLC Copyright 2022</p>
-          </div>
-        </div>
-      </form>
+                        <div className="flex justify-center">
+                          {/* <Button
+                            key="sign-up"
+                            label={"Sign Up"}
+                            loading={spinner}
+                            onPress={captchaVerify}
+                            size="lg"
+                            disabled={spinner}
+                          /> */}
+                          <button type="submit" onClick={captchaVerify}  className="btn my-5 w-full">Sign Up</button>
+                        </div>
+                      </div>
+                      <div className="px-4 py-3 text-white flex flex-col justify-center items-center ">
+                        <p>Already Account ? <Link style={{ textDecoration: 'underline' }} to='/login'>Please Login</Link></p>
+                        <p>The Firm LLC Copyright 2022</p>
+                      </div>
+                  </div>
+              </form>
+        }
        
       </div>
     </div>
