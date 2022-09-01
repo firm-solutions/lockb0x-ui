@@ -165,23 +165,13 @@ const Registeration = () => {
                           </div>
                         
                           <div className="col-span-6 sm:col-span-3">
-                          <button className="custom-wallet-btn" disabled>
+                          <button className="custom-wallet-btn" onClick={generateAddress}>
                             Get Wallet Address
                           </button>
                             <FormField
                               isMandatory
                               label="Wallet Address [?]"
                               value={state.walletAddress}
-                              rightSlot={
-                                <Button
-                                  key="generate-address"
-                                  label={"Generate New Address"}
-                                  loading={walletSpinner}
-                                  onPress={generateAddress}
-                                  size="lg"
-                                  className="wallet-btn btn-primary"
-                                />
-                              }
                               onChangeText={(walletAddress) =>
                                 setState({ ...state, walletAddress })
                               }
