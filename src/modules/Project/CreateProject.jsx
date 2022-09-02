@@ -9,7 +9,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { FaCaretDown } from "react-icons/fa";
 function CreateProject() {
     
-    const override: CSSProperties = {
+    const override = {
         display: "block",
         margin: "0 auto",
         borderColor: "white",
@@ -176,11 +176,6 @@ function CreateProject() {
                     
                 </div>
             </div>
-
-
-
-
-
             </div>
             <table class="table-auto w-full  rounded border-separate border-spacing-y-4 custom-table-dashboard mt-20">
                 <thead class="text-white text-left   tracking-wider">
@@ -189,7 +184,10 @@ function CreateProject() {
                             Party Name
                         </th>
                         <th scope="col" class="py-3 px-4 text-center">
-                            Name
+                            Email
+                        </th>
+                        <th scope="col" class="py-3 px-4 text-center">
+                           Project Name
                         </th>
                     </tr>
                 </thead>
@@ -200,12 +198,13 @@ function CreateProject() {
                             <tr  key={i} class="bg-stone-800 mt-6 text-white rounded">
                                 <td class="p-4 text-center">{dValue.partyName}</td>
                                 <td class="p-4 text-center">{dValue.contactEmail}</td>
+                                <td class="p-4 text-center">{dValue.projectName}</td>
                             </tr>
                         ))
                         :
-                        <div className="w-full h-full d-flex align-items-center justify-content-center">
-                            <ClipLoader color={color} loading={loading} cssOverride={override} size={50} />
-                        </div> 
+                            <div className="w-full h-full d-flex align-items-center justify-content-center">
+                                <ClipLoader color={color} loading={loading} cssOverride={override} size={50} />
+                            </div> 
                     }
                 </tbody>
             </table>  

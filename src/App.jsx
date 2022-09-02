@@ -7,6 +7,7 @@ import useAuth from "./hooks/useAuth";
 import Dashboard from "./modules/Dashboard";
 import Login from "./modules/Login";
 import CreateParty from "./modules/Party/CreateParty";
+import SendInvite from "./modules/Invites/sendInvite";
 import CreateProject from "./modules/Project/CreateProject";
 import Registeration from "./modules/Registeration";
 import RequireAuth from "./modules/RequireAuth";
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/" element={<Dashboard />} />
             <Route path="/create-party" element={<CreateParty />} />
             <Route path="/create-project" element={<CreateProject />} />
+            <Route path="/send-invites" element={<SendInvite/>} />
           </Route>
         </Route>
         <Route path={"/*"} element={<Navigate replace to={"/login"} />} />

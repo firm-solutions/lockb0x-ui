@@ -17,7 +17,7 @@ const checkFormValidation = (form) => {
 };
 
 const Login = () => {
-  const override: CSSProperties = {
+  const override = {
     display: "block",
     margin: "0 auto",
     borderColor: "green",
