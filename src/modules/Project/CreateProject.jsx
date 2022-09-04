@@ -19,6 +19,7 @@ function CreateProject() {
     const { register, handleSubmit, formState: { errors }, } = useForm();
      let [loading, setLoading] = useState(true);
     let [color, setColor] = useState("#ffffff");
+    const TOKEN = JSON.parse(localStorage.getItem('tokenData'));
     const [dropDownData, SetDropDownData] = useState({});
     const [dropDownDataID, SetDropDownDataID] = useState({});
     const [projectData, SetProjectData] = useState({});
@@ -30,7 +31,7 @@ function CreateProject() {
    
     // Fetch Project
     React.useEffect(()=>{
-        let bearer = 'Bearer ' + auth.accessToken;
+        let bearer = 'Bearer ' + TOKEN;
         const headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/json-patch+json',
@@ -59,7 +60,7 @@ function CreateProject() {
    
       
     React.useEffect(()=>{
-        let bearer = 'Bearer ' + auth.accessToken;
+        let bearer = 'Bearer ' + TOKEN;
         const headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/json-patch+json',
@@ -85,7 +86,7 @@ function CreateProject() {
      // Post Project
      const onSubmit = (data, e) => {
         console.log(data);
-        let bearer = 'Bearer ' + auth.accessToken;
+        let bearer = 'Bearer ' + TOKEN;
         const headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/json-patch+json',
@@ -130,52 +131,52 @@ function CreateProject() {
             </header>
             <div className="p-10">
                 <div className="container mt-20">
-                <div className="row custom-row">
+                    <div className="row custom-row">
+                            
+                        <div className="col-lg-4 col-md-8 mx-auto text-center">
+                            
+                        <div className="auth-content-box custom-h-w">
+                            <form action="" className="mt-2 w-full" onSubmit={handleSubmit(onSubmit)}>
+                                <div className="row">
+                                <div className="col-12">
+                                    <input className="form-control w-full " {...register("projectName", { required: true })} placeholder="Project Name" />
+                                    <div className="text-xs mt-1 text-red-500">{errors.projectName?.type === 'required' && "Project name is required"}</div>
+                                </div>
+                                <div className="col-12 custom-select-pos">
+                                <select className="form-control w-full " {...register("party", { required: true })} onChange={onChangeHandler}>
+                                    <option></option>
+                                        {
+                                            dropDownData && dropDownData.length>0 ? 
+                                            dropDownData.map((dValue, i) => (
+                                                <option key={i} id={dValue.partyId}>{dValue.name}</option>
+                                            ))
+                                            :
+                                            null
+                                        }
+                                </select>
+                                <div className="select-icon">
+                                    <FaCaretDown color='#fff' size={30}/>
+                                </div>
+                                <div className="text-xs mt-1 text-red-500">{errors.party?.type === 'required' && "Owning Party is required"}</div>
+                                </div>
+                                <div className="col-12">
+                                    <input className="form-control w-full " placeholder='Your Email' {...register("contactEmail", { required: true })} />
+                                    <div className="text-xs mt-1 text-red-500">{errors.contactEmail?.type === 'required' && "Contact email is required"}</div>
+                                </div>
+                                <div className="col-12">
+                                    <input className="form-control w-full " type="text" name="file" placeholder='Upload Files here' />
+                                    <div className="text-xs mt-1 text-red-500">{errors.uploadFile?.type === 'required' && "Upload File is required"}</div>
+                                </div>
+                                <div className="col-12 mt-4 text-center d-flex flex-column mt-20">
+                                    <button type="submit" class="btn mb-3 ">Create Project</button> <br/>
+                                </div>
+                                </div>
+                            </form>
+                        </div>
+                        </div>
                         
-                    <div className="col-lg-4 col-md-8 mx-auto text-center">
-                        
-                    <div className="auth-content-box custom-h-w">
-                        <form action="" className="mt-2 w-full" onSubmit={handleSubmit(onSubmit)}>
-                            <div className="row">
-                            <div className="col-12">
-                                <input className="form-control w-full " {...register("projectName", { required: true })} placeholder="Project Name" />
-                                <div className="text-xs mt-1 text-red-500">{errors.projectName?.type === 'required' && "Project name is required"}</div>
-                            </div>
-                            <div className="col-12 custom-select-pos">
-                            <select className="form-control w-full " {...register("party", { required: true })} onChange={onChangeHandler}>
-                                <option></option>
-                                    {
-                                        dropDownData && dropDownData.length>0 ? 
-                                        dropDownData.map((dValue, i) => (
-                                            <option key={i} id={dValue.partyId}>{dValue.name}</option>
-                                        ))
-                                        :
-                                        null
-                                    }
-                            </select>
-                            <div className="select-icon">
-                                <FaCaretDown color='#fff' size={30}/>
-                            </div>
-                            <div className="text-xs mt-1 text-red-500">{errors.party?.type === 'required' && "Owning Party is required"}</div>
-                            </div>
-                            <div className="col-12">
-                                <input className="form-control w-full " placeholder='Your Email' {...register("contactEmail", { required: true })} />
-                                <div className="text-xs mt-1 text-red-500">{errors.contactEmail?.type === 'required' && "Contact email is required"}</div>
-                            </div>
-                            <div className="col-12">
-                                <input className="form-control w-full " type="text" name="file" placeholder='Upload Files here' />
-                                <div className="text-xs mt-1 text-red-500">{errors.uploadFile?.type === 'required' && "Upload File is required"}</div>
-                            </div>
-                            <div className="col-12 mt-4 text-center d-flex flex-column mt-20">
-                            <button type="submit" class="btn mb-3 ">Create Project</button> <br/>
-                            </div>
-                            </div>
-                        </form>
                     </div>
-                    </div>
-                    
                 </div>
-            </div>
             </div>
             <table class="table-auto w-full  rounded border-separate border-spacing-y-4 custom-table-dashboard mt-20">
                 <thead class="text-white text-left   tracking-wider">

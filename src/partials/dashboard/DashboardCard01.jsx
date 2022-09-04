@@ -10,8 +10,6 @@ import useAuth from '../../hooks/useAuth';
 
 function DashboardCard01() {
 
-  const { auth } = useAuth()
-  console.log(auth)
   return (
     <div className="flex flex-col col-span-full sm:col-span-4 rounded-sm   custom-dashboard-box">
       <div className="px-5 pt-6 py-4 text-center">

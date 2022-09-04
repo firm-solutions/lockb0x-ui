@@ -65,7 +65,7 @@ const Login = () => {
                 const type = response?.data?.value.type
                 const expires = response?.data?.value.expires
                 setAuth({ ...state , accessToken ,  type , expires });
-                
+                localStorage.setItem('tokenData', JSON.stringify(accessToken));
                 navigate(from, { replace: true });
             }
 

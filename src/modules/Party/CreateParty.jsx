@@ -9,7 +9,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 
 function CreateParty() {
-    const override: CSSProperties = {
+    const override = {
         display: "block",
         margin: "0 auto",
         borderColor: "green",
@@ -18,12 +18,13 @@ function CreateParty() {
     let [loading, setLoading] = useState(true);
     const [modalShow, setModalShow] = React.useState(false);
     let [color, setColor] = useState("#ffffff");
+    const TOKEN = JSON.parse(localStorage.getItem('tokenData'));
     const { showAlert } = useAlert();
     const [dropDownData, SetDropDownData] = React.useState({});
     const [dropDownShowDataParty, SetdropDownShowDataParty] = useState({});
     const { auth } = useAuth()
         const onSubmit = (data, e) => {
-            let bearer = 'Bearer ' + auth.accessToken;
+            let bearer = 'Bearer ' + TOKEN;
             const headers = { 
                 'Accept': 'application/json',
                 'Content-Type': 'application/json-patch+json',
@@ -50,7 +51,7 @@ function CreateParty() {
 
         // Fetch Party
         React.useEffect(()=>{
-            let bearer = 'Bearer ' + auth.accessToken;
+            let bearer = 'Bearer ' + TOKEN;
             const headers = { 
                 'Accept': 'application/json',
                 'Content-Type': 'application/json-patch+json',

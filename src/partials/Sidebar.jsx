@@ -140,7 +140,7 @@ function Sidebar({
 
 
                {/* CSend Invites */}
-               <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('create-party') && 'bg-slate-900'}`}>
+               <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('send-invites') && 'bg-slate-900'}`}>
                 <NavLink end to="/send-invites" className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('send-invites') && 'hover:text-slate-200'}`}>
                   <div className="flex items-center">
                     <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
@@ -148,6 +148,20 @@ function Sidebar({
                       <path className={`fill-current text-slate-400 ${pathname.includes('send-invites') && 'text-indigo-300'}`} d="M4 18h2a1 1 0 001-1V8a1 1 0 00-1-1H4a1 1 0 00-1 1v9a1 1 0 001 1zM11 18h2a1 1 0 001-1V3a1 1 0 00-1-1h-2a1 1 0 00-1 1v14a1 1 0 001 1zM17 12v5a1 1 0 001 1h2a1 1 0 001-1v-5a1 1 0 00-1-1h-2a1 1 0 00-1 1z" />
                     </svg>
                     <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Send Invites</span>
+                  </div>
+                </NavLink>
+              </li>
+
+
+               {/* Change Password */}
+               <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('change-password') && 'bg-slate-900'}`}>
+                <NavLink end to="/change-password" className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('change-password') && 'hover:text-slate-200'}`}>
+                  <div className="flex items-center">
+                    <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
+                      <path className={`fill-current text-slate-600 ${pathname.includes('change-password') && 'text-indigo-500'}`} d="M0 20h24v2H0z" />
+                      <path className={`fill-current text-slate-400 ${pathname.includes('change-password') && 'text-indigo-300'}`} d="M4 18h2a1 1 0 001-1V8a1 1 0 00-1-1H4a1 1 0 00-1 1v9a1 1 0 001 1zM11 18h2a1 1 0 001-1V3a1 1 0 00-1-1h-2a1 1 0 00-1 1v14a1 1 0 001 1zM17 12v5a1 1 0 001 1h2a1 1 0 001-1v-5a1 1 0 00-1-1h-2a1 1 0 00-1 1z" />
+                    </svg>
+                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Change Password</span>
                   </div>
                 </NavLink>
               </li>

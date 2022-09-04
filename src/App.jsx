@@ -11,6 +11,7 @@ import SendInvite from "./modules/Invites/sendInvite";
 import CreateProject from "./modules/Project/CreateProject";
 import Registeration from "./modules/Registeration";
 import RequireAuth from "./modules/RequireAuth";
+import ChangePassword from "./modules/changePassword/ChangePassword";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="/create-party" element={<CreateParty />} />
             <Route path="/create-project" element={<CreateProject />} />
             <Route path="/send-invites" element={<SendInvite/>} />
+            <Route path="/change-password" element={<ChangePassword/>} />
           </Route>
         </Route>
         <Route path={"/*"} element={<Navigate replace to={"/login"} />} />
