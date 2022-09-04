@@ -5,17 +5,14 @@
 /*html,*/
 body {
   /*background-color: rgb(243 244 246);*/
-  box-sizing: border-box;
-
+box-sizing: border-box;
 /*position: relative;
 width: 1440px;
 height: 1024px;*/
-height: 100vh;
-
+min-height: 100vh;
 background: linear-gradient(65.22deg, #000000 28.07%, rgba(22, 54, 48, 0.677027) 95.43%, rgba(69, 168, 150, 0) 115.33%);
 /*border: 10px solid #000000;*/
 border-radius: 20px;
-overflow: hidden;
 }
 
 /*.sign-main-div , input{
@@ -23,13 +20,58 @@ overflow: hidden;
   box-shadow: 0px 8px 42px rgba(116, 210, 195, 0.29);
   border-radius: 10px;
 }*/
-
+#sidebar{
+  min-height: 100%;
+}
+.custom-sidebar{
+  min-height: 100vh;
+}
+.custom-h-w{
+  background: rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0px 8px 42px rgba(116, 210, 195, 0.29) !important;
+  border-radius: 10px !important;
+  min-width: 561px;
+  min-height: 533px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 .custom-row{
   display: flex;
 }
 .table{
   width: 100%;
 }
+.custom-select-pos{
+  position: relative;
+}
+.select-icon{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.custom-dashboard-box{
+  width: 100%;
+  height: 136px;
+  background: rgba(217, 217, 217, 0.2);
+  border-radius: 10px;
+}
+.custom-wallet-btn{
+  float: right;
+  height: 40px;
+  /* width: 160px; */
+  padding:10px;
+  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #60706c;
+  border-radius: 8px;
+  margin-bottom: 0px;
+  color: #fff;
+  cursor: pointer;
+  }
 .auth-sec{
   display:flex;
   min-height:100vh;
@@ -89,4 +131,30 @@ select.form-control option {
   min-height: 400px;
   width: 100%;
   margin:30px 0;
+}
+.wallet-btn{
+  height: 50px;
+  width: 100%;
+  background-color: red;
+}
+.custom-table-dashboard thead tr{
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 23px;
+  color: #FFFFFF;
+  text-transform: initial;
+  margin-top: 100px;
+  
+}
+.custom-table-dashboard tbody tr{
+  background: rgba(67, 67, 67, 0.5);
+  border-radius: 8px;
+  height: 59px;
+  margin-bottom: 4px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 23px;
+  color: #FFFFFF;
 }

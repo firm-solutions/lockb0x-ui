@@ -1,26 +1,37 @@
-import React, { useState } from 'react'
+import React,  { useState, CSSProperties } from 'react'
 import { useForm } from "react-hook-form";
 import axios from 'axios';
 import baseURL from '../../api/axios'
 import useAlert from "../../common/hooks/useAlert";
 import AuthContext from '../../context/AuthProvider';
 import useAuth from '../../hooks/useAuth';
-
+import ClipLoader from "react-spinners/ClipLoader";
+import { FaCaretDown } from "react-icons/fa";
 function CreateProject() {
+    
+    const override = {
+        display: "block",
+        margin: "0 auto",
+        borderColor: "white",
+      };
+
+
     const { register, handleSubmit, formState: { errors }, } = useForm();
- 
+     let [loading, setLoading] = useState(true);
+    let [color, setColor] = useState("#ffffff");
+    const TOKEN = JSON.parse(localStorage.getItem('tokenData'));
     const [dropDownData, SetDropDownData] = useState({});
     const [dropDownDataID, SetDropDownDataID] = useState({});
     const [projectData, SetProjectData] = useState({});
     const [dropDownID, SetDropDownID] = useState();
-    const [dropDownShowData, SetdropDownShowData] = useState();
+    const [dropDownShowData, SetdropDownShowData] = useState({});
 
     const { showAlert } = useAlert();
     const { auth } = useAuth()
    
     // Fetch Project
     React.useEffect(()=>{
-        let bearer = 'Bearer ' + auth.accessToken;
+        let bearer = 'Bearer ' + TOKEN;
         const headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/json-patch+json',
@@ -34,17 +45,22 @@ function CreateProject() {
                  
                     SetProjectData(resData.value)
                     showAlert({ type:"success", message: "Multiple Objects Received", duration: 2000 });
+                    if(resData.response.status=='OK'){
+                        setLoading(!loading)
+                    }else{
+                        setLoading(loading)
+                    }
                    
                 });
             } catch (e) {
                 showAlert({ type: "error", message: e.message, duration: 2000 });
             }
-    },[])
+    },[dropDownShowData])
     // Fetch Part DropDown
    
       
     React.useEffect(()=>{
-        let bearer = 'Bearer ' + auth.accessToken;
+        let bearer = 'Bearer ' + TOKEN;
         const headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/json-patch+json',
@@ -70,7 +86,7 @@ function CreateProject() {
      // Post Project
      const onSubmit = (data, e) => {
         console.log(data);
-        let bearer = 'Bearer ' + auth.accessToken;
+        let bearer = 'Bearer ' + TOKEN;
         const headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/json-patch+json',
@@ -109,84 +125,90 @@ function CreateProject() {
 
     return (
 
-        <div className=" bg-white shadow-lg rounded-sm border border-gray-200">
+        <div className=" shadow-lg">
             <header className="px-5 py-4 border-b border-gray-100">
-                <h2 className="text-2xl text-gray-800 font-bold mb-6">Create Project</h2>
+                <h2 className="text-2xl text-white font-bold mb-6">Create Project</h2>
             </header>
             <div className="p-10">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="grid gap-5 md:grid-cols-3">
-                        <div>
-                            <div>
-                                <label className="block text-sm font-medium mb-1">Project Name<span className="text-red-500">*</span></label>
-                                <input className="form-input w-full " {...register("projectName", { required: true })} />
-                            </div>
-                            <div className="text-xs mt-1 text-red-500">{errors.projectName?.type === 'required' && "Project name is required"}</div>
+                <div className="container mt-20">
+                    <div className="row custom-row">
+                            
+                        <div className="col-lg-4 col-md-8 mx-auto text-center">
+                            
+                        <div className="auth-content-box custom-h-w">
+                            <form action="" className="mt-2 w-full" onSubmit={handleSubmit(onSubmit)}>
+                                <div className="row">
+                                <div className="col-12">
+                                    <input className="form-control w-full " {...register("projectName", { required: true })} placeholder="Project Name" />
+                                    <div className="text-xs mt-1 text-red-500">{errors.projectName?.type === 'required' && "Project name is required"}</div>
+                                </div>
+                                <div className="col-12 custom-select-pos">
+                                <select className="form-control w-full " {...register("party", { required: true })} onChange={onChangeHandler}>
+                                    <option></option>
+                                        {
+                                            dropDownData && dropDownData.length>0 ? 
+                                            dropDownData.map((dValue, i) => (
+                                                <option key={i} id={dValue.partyId}>{dValue.name}</option>
+                                            ))
+                                            :
+                                            null
+                                        }
+                                </select>
+                                <div className="select-icon">
+                                    <FaCaretDown color='#fff' size={30}/>
+                                </div>
+                                <div className="text-xs mt-1 text-red-500">{errors.party?.type === 'required' && "Owning Party is required"}</div>
+                                </div>
+                                <div className="col-12">
+                                    <input className="form-control w-full " placeholder='Your Email' {...register("contactEmail", { required: true })} />
+                                    <div className="text-xs mt-1 text-red-500">{errors.contactEmail?.type === 'required' && "Contact email is required"}</div>
+                                </div>
+                                <div className="col-12">
+                                    <input className="form-control w-full " type="text" name="file" placeholder='Upload Files here' />
+                                    <div className="text-xs mt-1 text-red-500">{errors.uploadFile?.type === 'required' && "Upload File is required"}</div>
+                                </div>
+                                <div className="col-12 mt-4 text-center d-flex flex-column mt-20">
+                                    <button type="submit" class="btn mb-3 ">Create Project</button> <br/>
+                                </div>
+                                </div>
+                            </form>
                         </div>
-                        <div>
-                            <label className="block text-sm font-medium mb-1" for="country">Owning Party<span className="text-red-500">*</span></label>
-                            <select className="form-select w-full" {...register("party", { required: true })} onChange={onChangeHandler}>
-                                <option></option>
-                                    {
-                                        dropDownData && dropDownData.length>0 ? 
-                                        dropDownData.map((dValue, i) => (
-                                            <option key={i} id={dValue.partyId}>{dValue.name}</option>
-                                        ))
-                                        :
-                                        null
-                                    }
-                                
-                               
-                            </select>
-                            <div className="text-xs mt-1 text-red-500">{errors.party?.type === 'required' && "Owning Party is required"}</div>
                         </div>
-                        <div>
-                            <div>
-                                <label className="block text-sm font-medium mb-1">Contact Email<span className="text-red-500">*</span></label>
-                                <input className="form-input w-full " {...register("contactEmail", { required: true })} />
-                            </div>
-                            <div className="text-xs mt-1 text-red-500">{errors.contactEmail?.type === 'required' && "Contact email is required"}</div>
-                        </div>
-                        <div>
-                            <div>
-                                <label className="block text-sm font-medium mb-1">Upload Files <span className="text-red-500">*</span></label>
-                                <input className="form-input w-full " type="file" name="file" />
-                                {/* <input  {...register("uploadFile", { required: true })} /> */}
-                            </div>
-                            <div className="text-xs mt-1 text-red-500">{errors.uploadFile?.type === 'required' && "Upload File is required"}</div>
-                        </div>
-                        <div>
-                            <div className="m-6">
-                                <button type='submit' className="btn  rounded-lg px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white">Create Project</button>
-                            </div>
-                        </div>
-
+                        
                     </div>
-                </form>
+                </div>
             </div>
-            <div className="part-list-table p-5">
-                <table class="table ">
-                    <thead>
-                        <tr>
-                        <th className='text-start'>Party Name</th>
-                        <th className='text-start'>Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            projectData && projectData.length>0 ? 
-                            projectData.map((dValue, i) => (
-                                <tr key={i}>
-                                <td>{dValue.partyName}</td>
-                                <td>{dValue.contactEmail}</td>
-                                </tr>
-                            ))
-                            :
-                            <h4>Loading....</h4>
-                        }
-                    </tbody>
-                </table>
-            </div>
+            <table class="table-auto w-full  rounded border-separate border-spacing-y-4 custom-table-dashboard mt-20">
+                <thead class="text-white text-left   tracking-wider">
+                    <tr>
+                        <th scope="col" class="py-3 px-4 text-center">
+                            Party Name
+                        </th>
+                        <th scope="col" class="py-3 px-4 text-center">
+                            Email
+                        </th>
+                        <th scope="col" class="py-3 px-4 text-center">
+                           Project Name
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        projectData && projectData.length>0 ? 
+                        projectData.map((dValue, i) => (
+                            <tr  key={i} class="bg-stone-800 mt-6 text-white rounded">
+                                <td class="p-4 text-center">{dValue.partyName}</td>
+                                <td class="p-4 text-center">{dValue.contactEmail}</td>
+                                <td class="p-4 text-center">{dValue.projectName}</td>
+                            </tr>
+                        ))
+                        :
+                            <div className="w-full h-full d-flex align-items-center justify-content-center">
+                                <ClipLoader color={color} loading={loading} cssOverride={override} size={50} />
+                            </div> 
+                    }
+                </tbody>
+            </table>  
         </div>
     )
 }
